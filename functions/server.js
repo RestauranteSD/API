@@ -1,3 +1,4 @@
+const serverless = require("serverless-http");
 const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
@@ -9,7 +10,7 @@ app.use(cors());
 app.use(express.json());  // Permitir JSON en las solicitudes
 
 // Configuración de Firebase Admin
-const serviceAccount = require("./serviceAccountKey.json");  // Reemplaza con tu archivo JSON
+const serviceAccount = require("../serviceAccountKey.json");  // Reemplaza con tu archivo JSON
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   storageBucket: "restaurante-cc8a5.firebasestorage.app"  // Reemplaza con tu ID de proyecto de Firebase
@@ -161,6 +162,8 @@ app.delete("/menu/:id", (req, res) => {
     res.json({ message: "Menú eliminado correctamente" });
   });
 });
+
+module.exports.handler = serverless(app);
 
 // Iniciar el servidor
 const PORT = 3000;
