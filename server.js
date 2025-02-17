@@ -15,6 +15,8 @@ admin.initializeApp({
   storageBucket: "restaurante-cc8a5.firebasestorage.app"  // Reemplaza con tu ID de proyecto de Firebase
 });
 
+const ngrokurl = 'https://ad74-2800-cd0-7609-2b00-8d65-8e16-bcbf-c2a2.ngrok-free.app';
+
 const bucket = admin.storage().bucket();
 
 // Conectar a MySQL
@@ -36,7 +38,7 @@ app.put('/menu/:id', async (req, res) => {
     const { nombre, status } = req.body; // Datos que quieres actualizar
 
     // Generar URL para el QR (puedes modificarla según tu lógica)
-    const qrData = `http://localhost:3000/menu/${menuId}`;
+    const qrData = `${ngrokurl}/menu/${menuId}`;
 
     try {
         // Generar el código QR como una imagen base64
@@ -119,7 +121,7 @@ app.post("/menu", async (req, res) => {
     if (err) throw err;
 
     const menuId = result.insertId;
-    const qrData = `http://localhost:3000/menu/${menuId}`;
+    const qrData = `${ngrokurl}/menu/${menuId}`;
 
     try {
       // Generar el código QR como una imagen base64
@@ -165,5 +167,5 @@ app.delete("/menu/:id", (req, res) => {
 // Iniciar el servidor
 const PORT = 3000;
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+  console.log(`Servidor corriendo en ${ngrokurl}`);
 });
